@@ -7,13 +7,13 @@ title: Hexo
 subtitle:
 description:
 keywords:
-author: John Doe
+author: Charles
 language:
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://github.com/Charles199310/Charles199310.github.io.git
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -78,4 +78,5 @@ theme: hexo-theme-next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: https://github.com/Charles199310/Charles199310.github.io.git
