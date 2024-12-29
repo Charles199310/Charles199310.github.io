@@ -1,38 +1,45 @@
----
-layout: compress
----
-<!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: " en " }}">
-{% include header.html %}
+<!doctype html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
-<body data-theme="{{ site.mode }}" class="notransition">
+  {% include head.html %}
 
-  <script>
-    const body = document.body;
-    const data = body.getAttribute("data-theme");
+  <body>
 
-    const initTheme = (state) => {
-      if (state === "dark") {
-        body.setAttribute("data-theme", "dark");
-      } else if (state === "light") {
-        body.removeAttribute("data-theme");
-      } else {
-        localStorage.setItem("theme", data);
-      }
-    };
- 
-    initTheme(localStorage.getItem("theme"));
-    
-    setTimeout(() => body.classList.remove("notransition"), 75);
-  </script>
+    <div class="container pure-g">
+      {%- assign cover_bg_color = site.cover_bg_color | default: "rgb(40, 73, 77)" -%}
+      {%- assign cover_color    = site.cover_color    | default: "rgb(255, 255, 255)" -%}
+      {%- assign cover_image    = site.cover_image -%}
+      {%- if page.cover_bg_color -%}
+        {%- assign cover_bg_color  = page.cover_bg_color -%}
+      {%- endif -%}
+      {%- if page.cover_color -%}
+        {%- assign cover_color     = page.cover_color -%}
+      {%- endif -%}
+      {%- if page.cover_image -%}
+        {%- assign cover_image     = page.cover_image -%}
+      {%- endif -%}
+      <div class="sidebar-left pure-u-1 pure-u-md-1-4" style="background-color: {{ cover_bg_color }}; color: {{ cover_color}}; {% if cover_image %}background-image: url({{ cover_image | relative_url }});{% endif %}">
+        {%- include sidebar-left.html -%}
+      </div>
 
-  {% include navbar.html %}
-  <div class="wrapper">
-    {% include author.html %}
-    <main aria-label="Content">
-      {{ content }}
-    </main>
-    {% include footer.html %}
-  </div>
-</body>
+      <div class="content pure-u-1 pure-u-md-1-2">
+        {%- include content.html -%}
+      </div>
+      <div class="sidebar-right pure-u-1 pure-u-md-1-4">
+        {%- include sidebar-right.html -%}
+      </div>
+    </div>
+
+    <script async src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+    {%- include scroll.html -%}
+
+    {%- if page.math -%}
+      {% include mathjax.html %}
+    {%- endif -%}
+
+    {%- if jekyll.environment == 'production' and site.google_analytics -%}
+      {%- include google-analytics.html -%}
+    {%- endif -%}
+  </body>
 </html>
