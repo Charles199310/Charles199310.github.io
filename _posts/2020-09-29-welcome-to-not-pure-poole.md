@@ -1,169 +1,58 @@
 ---
 layout: post
-title: Welcome to Not Pure Poole
+title: Zygote Fork机制与资源预加载
 date: 2020-09-29 23:18 +0800
 last_modified_at: 2020-10-01 01:08:25 +0800
-tags: [jekyll theme, jekyll, tutorial]
+tags: [Zygoote]
 toc:  true
 ---
-Welcome to **Not Pure Poole**! This is an example post to show the layout.
-{: .message }
+# Zygote Fork机制与资源预加载
 
-First, do you notice the TOC on the right side? Try to scroll down to read this post, you'll find that the TOC is always sticky in the viewport.
+在我们做AMS,PMS等分享的时候都有提到过zygote,那么zygote是什么呢？
 
-Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. *Aenean eu leo quam.* Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.
+zygote中文意思是受精卵，
+通过这个名字我们大概可以知道，安卓系统大概是通过他孵化什么东西。
 
-> Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.
+祭上图来解释：
 
-Etiam porta **sem malesuada magna** mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.
+![zygote_img_02](src/Zygote_Fork机制与资源预加载/zygote_img_2.png)
 
-## Inline HTML elements
+由图我们可以看出，他的父进程是init进程，他孵化了SystemServer进程，以及我们的应用进程。
+下面我们重点看一看zygote是怎么工作的：
 
-HTML defines a long list of available inline tags, a complete list of which can be found on the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
+## Zygote进程创建
+__从上图可以看出zygote是由init进程fork出来的。__
+我们知道Android是基于Linux实现的。而init进程是Linux启动后的第一个用户进程。下图为我们展示了
+android启动的过程
 
-- **To bold text**, use `<strong>`.
-- *To italicize text*, use `<em>`.
-- <mark>To highlight</mark>, use `<mark>`.
-- Abbreviations, like <abbr title="HyperText Markup Langage">HTML</abbr> should use `<abbr>`, with an optional `title` attribute for the full phrase.
-- Citations, like <cite>&mdash; Mark Otto</cite>, should use `<cite>`.
-- <del>Deleted</del> text should use `<del>` and <ins>inserted</ins> text should use `<ins>`.
-- Superscript <sup>text</sup> uses `<sup>` and subscript <sub>text</sub> uses `<sub>`.
+![zygote_img_03](src/Zygote_Fork机制与资源预加载/zygote_img_03.png)
 
-Most of these elements are styled by browsers with few modifications on our part.
+上图中Step1~Step4都发生在Linux中，与Android没多大关系，Step5开始才正式开始构建Android
+世界。我们接下来以Android 8系统源码为例看看Step4是过渡到Step5的。
 
-## Footnotes
+linunx的init进程会执行到\\android-8.0.0_r1\\system\\core\\init\\init.cpp中，init.cpp
+会读取init.rc文件\\android-8.0.0_r1\\system\\core\\rootdir\\init.rc文件，然后依据配
+置创建新线程并执行相应的代码（surfaceflinger中会有讲到），其中有一条配置指向
+\\android-8.0.0_r1\\frameworks\\base\\cmds\\app_process\\app_main.cpp，这个就是我们zygote的开始
 
-Footnotes are supported as part of the Markdown syntax. Here's one in action. Clicking this number[^fn-sample_footnote] will lead you to a footnote. The syntax looks like:
+## Zygote孵化SystemServer和其他进程
+祭上一张zygote时序图
 
-{% highlight text %}
-Clicking this number[^fn-sample_footnote]
-{% endhighlight %}
+![zygote_img_04](src/Zygote_Fork机制与资源预加载/zygote_img_04.png)
 
-Each footnote needs the `^fn-` prefix and a unique ID to be referenced for the footnoted content. The syntax for that list looks something like this:
+* 上图中app_main和AndroidRuntime是native层的，其余的是Java层的。
+* 在nativeZygoteInit中完成Binder服务初始化。这时候Binder才可以使用。（SystemServer进程）
+  （_在fork出新线程后做的第一件事就是关闭socket，如果采用Binder直接拿着地址是不是会有安全问题_）
+* runSelectLoop进入死循环等待fork新进程的请求。
+* preload预加载了一些可能会用到的类和资源比如说
 
-{% highlight text %}
-[^fn-sample_footnote]: Handy! Now click the return link to go back.
-{% endhighlight %}
+ ![zygote_img_05](src/Zygote_Fork机制与资源预加载/zygote_img_05.png)
 
-You can place the footnoted content wherever you like. Markdown parsers should properly place it at the bottom of the post.
+## AMS请求Zygote fork一个新进程
+当AMS判断需要一个新进程是会执行到startProcessLocked（）与Zygote通信。
+Zygote收到后会调用Zygote.forkAndSpecialize(),fork一个新进程，并且分叉
 
-## Heading
+ ![zygote_img_06](src/Zygote_Fork机制与资源预加载/zygote_img_06.PNG)
 
-Vivamus sagittis lacus vel augue rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
-### Code
-
-Inline code is available with the `<code>` element. Snippets of multiple lines of code are supported through Rouge. Longer lines will automatically scroll horizontally when needed. You may also use code fencing (triple backticks) for rendering code.
-
-{% highlight js %}
-// Example can be run directly in your JavaScript console
-
-// Create a function that takes two arguments and returns the sum of those arguments
-var adder = new Function("a", "b", "return a + b");
-
-// Call the function
-adder(2, 6);
-// > 8
-{% endhighlight %}
-
-You may also optionally show code snippets with line numbers. Add `linenos` to the Rouge tags.
-
-{% highlight js linenos %}
-// Example can be run directly in your JavaScript console
-
-// Create a function that takes two arguments and returns the sum of those arguments
-var adder = new Function("a", "b", "return a + b");
-
-// Call the function
-adder(2, 6);
-// > 8
-{% endhighlight %}
-
-Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.
-
-### Lists
-
-Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-
-- Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-- Donec id elit non mi porta gravida at eget metus.
-- Nulla vitae elit libero, a pharetra augue.
-
-Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.
-
-1. Vestibulum id ligula porta felis euismod semper.
-2. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-3. Maecenas sed diam eget risus varius blandit sit amet non magna.
-
-Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.
-
-<dl>
-  <dt>HyperText Markup Language (HTML)</dt>
-  <dd>The language used to describe and define the content of a Web page</dd>
-
-  <dt>Cascading Style Sheets (CSS)</dt>
-  <dd>Used to describe the appearance of Web content</dd>
-
-  <dt>JavaScript (JS)</dt>
-  <dd>The programming language used to build advanced Web sites and applications</dd>
-</dl>
-
-Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam quis risus eget urna mollis ornare vel eu leo.
-
-### Images
-
-Quisque consequat sapien eget quam rhoncus, sit amet laoreet diam tempus. Aliquam aliquam metus erat, a pulvinar turpis suscipit at.
-
-![placeholder](http://placehold.it/800x400 "Large example image")
-![placeholder](http://placehold.it/400x200 "Medium example image")
-![placeholder](http://placehold.it/200x200 "Small example image")
-
-Align to the center by adding `class="align-center"`:
-
-![placeholder](http://placehold.it/400x200 "Medium example image"){: .align-center}
-
-### Tables
-
-Aenean lacinia bibendum nulla sed consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Upvotes</th>
-      <th>Downvotes</th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <td>Totals</td>
-      <td>21</td>
-      <td>23</td>
-    </tr>
-  </tfoot>
-  <tbody>
-    <tr>
-      <td>Alice</td>
-      <td>10</td>
-      <td>11</td>
-    </tr>
-    <tr>
-      <td>Bob</td>
-      <td>4</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <td>Charlie</td>
-      <td>7</td>
-      <td>9</td>
-    </tr>
-  </tbody>
-</table>
-
-Nullam id dolor id nibh ultricies vehicula ut id elit. Sed posuere consectetur est at lobortis. Nullam quis risus eget urna mollis ornare vel eu leo.
-
------
-
-Want to see something else added? <a href="https://github.com/vszhub/not-pure-poole/issues/new">Open an issue.</a>
-
-[^fn-sample_footnote]: Handy! Now click the return link to go back.
+ 分叉后的进程会将socket停掉并重新初始化一些数据但是，preload的资源和类保和VM留了下来,
+ 自此新的进程和zygote进程分道扬镳。
