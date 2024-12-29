@@ -15,7 +15,7 @@ zygote中文意思是受精卵，
 
 祭上图来解释：
 
-![zygote_img_02](https://github.com/Charles199310/Charles199310.github.io/blob/%E6%B5%8B%E8%AF%95/_posts/src/Zygote_Fork%E6%9C%BA%E5%88%B6%E4%B8%8E%E8%B5%84%E6%BA%90%E9%A2%84%E5%8A%A0%E8%BD%BD/zygote_img_2.png)
+![zygote_img_02](https://github.com/Charles199310/Charles199310.github.io/blob/%E6%B5%8B%E8%AF%95/_posts/src/Zygote_Fork%E6%9C%BA%E5%88%B6%E4%B8%8E%E8%B5%84%E6%BA%90%E9%A2%84%E5%8A%A0%E8%BD%BD/zygote_img_2.png?raw=true)
 
 由图我们可以看出，他的父进程是init进程，他孵化了SystemServer进程，以及我们的应用进程。
 下面我们重点看一看zygote是怎么工作的：
