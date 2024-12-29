@@ -1,9 +1,6 @@
 - title: Email
   url: mailto://sunchenhao1993@163.com
   icon: fas fa-envelope
-- title: Twitter
-  url: https://twitter.com/
-  icon: fab fa-wechat
 - title: GitHub
   url: https://github.com/Charles199310
   icon: fab fa-github
