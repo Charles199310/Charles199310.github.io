@@ -3,7 +3,7 @@
   icon: fas fa-envelope
 - title: Mobile
   url: tel:18813128083
-  icon: fab fa-mobile
+  icon: fa fa-mobile
 - title: GitHub
   url: https://github.com/Charles199310
   icon: fab fa-github
