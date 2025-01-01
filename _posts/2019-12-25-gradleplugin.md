@@ -6,7 +6,8 @@ last_modified_at: 2025-1-1 11:44 +0800
 tags: [Gradle Plugin，其它]
 toc: true
 ---
-# 编写自定义Android Gradle Plugin  
+# 编写自定义Android Gradle Plugin 
+ 
 ## 什么是Gradle
 Gradle是我们在Android工程中的 __自动构建工具__ 。__自动化构建__ 就是将我们的代码打包成jar、aar、apk的过程。  
 我们知道，我们编写的Java、xml并不能直接运行在ART、Dalvik或者JVM上。需要将其编译为dex或jar、class，如可可能的话还要直接运行。Gradle将这些操作打包成一个命令。
