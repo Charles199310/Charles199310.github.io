@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 编写自定义Android Gradle Plugin
-date: 2019-12-27 23:14 +0800
+date: 2019-12-25 23:14 +0800
 last_modified_at: 2025-1-1 11:44 +0800
 tags: [Gradle Plugin，其它]
 toc: true
