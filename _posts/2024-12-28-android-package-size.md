@@ -45,7 +45,7 @@ Android包大小是性能的一个重要指标。在我们开发Android应用中
 
 ## 包体构成
 
-![Android包体勾陈](https://github.com/Charles199310/Charles199310.github.io/blob/main/assets/images/packeage-size-1.png?raw=true)
+![Android包体勾陈](https://github.com/Charles199310/Charles199310.github.io/blob/main/assets/images/package-size-1.png?raw=true)
 
 要想优化Android包体积，我们需要先分析Android包体里面有哪些内容：
 
