@@ -23,9 +23,7 @@ layout: default
       {%- endif -%}
     </div>
 
-    {% if post.tags %}
-      {% include post-tags.html %}
-    {% endif %}
+    <p>{{ post.tags }}</p>
   </section>
   {% endfor %}
   {%- if jekyll.environment == "production" and site.disqus -%}
