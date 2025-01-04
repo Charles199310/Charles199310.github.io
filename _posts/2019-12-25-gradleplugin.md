@@ -72,45 +72,45 @@ Gradle插件有三种编写，并应用的方法：
 
 2. 修改buildSrc目录下的build.gradle，将Java模块改为groovy模块:
   ``` Groovy
-  apply plugin: 'groovy'
+    apply plugin: 'groovy'
 
-  dependencies {
-      implementation fileTree(dir: 'libs', include: ['*.jar'])
-      implementation gradleApi() //gradle sdk
-      implementation localGroovy() //groovy sdk
-  }
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation gradleApi() //gradle sdk
+        implementation localGroovy() //groovy sdk
+    }
   ```
 
 3. 删除Java目录，新建groovy目录，用于添加groovy文件:  
   ![新建grooy目录](https://github.com/Charles199310/Charles199310.github.io/blob/main/assets/images/gradle_plugin_03.PNG?raw=true)
-  
+
 4. 添加Plugin文件，后缀为.groovy
   ``` Groovy
-  // MyTask.groovy
-  import org.gradle.api.internal.AbstractTask
-  import org.gradle.api.tasks.TaskAction
-  import org.gradle.tooling.BuildException
+    // MyTask.groovy
+    import org.gradle.api.internal.AbstractTask
+    import org.gradle.api.tasks.TaskAction
+    import org.gradle.tooling.BuildException
 
-  class MyTask extends AbstractTask{
-      @TaskAction
-      void action(){
-          println("Hello World")
-      }
-  }
-
-  // MyPlugin.groovy
-  package com.chenhaosun
-
-  import org.gradle.api.Plugin
-  import org.gradle.api.Project
-  import org.gradle.api.Task
-
-  class MyPlugin implements Plugin<Project> {
-      @Override
-      void apply(Project project) {
-
-        def task = project.task("myTask",type: MyTask)
-        project.getTasksByName('generateDebugBuildConfig', false).getAt(0).dependsOn(task)
+    class MyTask extends AbstractTask{
+        @TaskAction
+        void action(){
+            println("Hello World")
+        }
     }
+
+    // MyPlugin.groovy
+    package com.chenhaosun
+
+    import org.gradle.api.Plugin
+    import org.gradle.api.Project
+    import org.gradle.api.Task
+
+    class MyPlugin implements Plugin<Project> {
+        @Override
+        void apply(Project project) {
+
+          def task = project.task("myTask",type: MyTask)
+          project.getTasksByName('generateDebugBuildConfig', false).getAt(0).dependsOn(task)
+      }
   }
   ```
