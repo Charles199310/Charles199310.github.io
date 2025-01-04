@@ -6,6 +6,7 @@ last_modified_at: 2025-1-2 11:4 +0800
 tags: [性能, 包大小]
 toc: true
 ---
+
 # Android包大小优化那些事
 
 Android包大小是性能的一个重要指标。在我们开发Android应用中，包体及其优化具有重要意义，主要体现在以下几个方面：
