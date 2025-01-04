@@ -3,7 +3,7 @@ layout: post
 title: Singleton 单例模式
 date: 2019-11-22 00:16 +0800
 last_modified_at: 2025-01-01 15:11 +0800
-tags: [设计模式，单例模式]
+tags: [设计模式, 单例模式]
 toc:  true
 ---
 # Singleton 单例模式

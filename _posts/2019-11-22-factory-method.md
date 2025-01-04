@@ -3,7 +3,7 @@ layout: post
 title: Factory Method 工厂方法模式
 date: 2019-11-22 01:35 +0800
 last_modified_at: 2025-01-01 15:08 +0800
-tags: [设计模式，工厂方法模式]
+tags: [设计模式, 工厂方法模式]
 toc:  true
 ---
 # Factory Method 工厂方法模式

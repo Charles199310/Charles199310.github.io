@@ -3,7 +3,7 @@ layout: post
 title: Decorator 装饰模式
 date: 2019-11-27 01:02 +0800
 last_modified_at: 2025-01-01 15:32 +0800
-tags: [设计模式，装饰模式]
+tags: [设计模式, 装饰模式]
 toc:  true
 ---
 

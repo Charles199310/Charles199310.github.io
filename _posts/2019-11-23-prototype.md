@@ -3,7 +3,7 @@ layout: post
 title: Prototype 原型模式
 date: 2019-11-23 20:27 +0800
 last_modified_at: 2025-01-01 15:20 +0800
-tags: [设计模式，原型模式]
+tags: [设计模式, 原型模式]
 toc:  true
 ---
 # Prototype 原型模式

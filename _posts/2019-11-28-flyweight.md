@@ -3,7 +3,7 @@ layout: post
 title: Flyweight 享元模式
 date: 2019-11-28 23:33 +0800
 last_modified_at: 2025-01-01 15:40 +0800
-tags: [设计模式，享元模式]
+tags: [设计模式, 享元模式]
 toc:  true
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: Template Method 模板方法模式
 date: 2019-11-30 01:07 +0800
 last_modified_at: 2025-01-01 15:46 +0800
-tags: [设计模式，模板方法模式]
+tags: [设计模式, 模板方法模式]
 toc:  true
 ---
 

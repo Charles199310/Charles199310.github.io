@@ -3,7 +3,7 @@ layout: post
 title: Interpreter 解释器模式
 date: 2019-12-02 23:35 +0800
 last_modified_at: 2025-01-01 16:04 +0800
-tags: [设计模式，解释器模式]
+tags: [设计模式, 解释器模式]
 toc:  true
 ---
 

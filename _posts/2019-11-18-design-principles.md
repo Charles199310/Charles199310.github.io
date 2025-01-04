@@ -3,7 +3,7 @@ layout: post
 title: 设计原则
 date: 2019-11-18 00:10 +0800
 last_modified_at: 2025-01-01 16:12 +0800
-tags: [设计模式，设计原则]
+tags: [设计模式, 设计原则]
 toc:  true
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: Composite 组合模式
 date: 2019-11-27 11:52 +0800
 last_modified_at: 2025-01-01 15:35 +0800
-tags: [设计模式，组合模式]
+tags: [设计模式, 组合模式]
 toc:  true
 ---
 

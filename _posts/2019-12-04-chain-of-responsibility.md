@@ -3,7 +3,7 @@ layout: post
 title: Chan of Responsibility 责任链模式
 date: 2019-12-04 22:46 +0800
 last_modified_at: 2025-01-01 16:09 +0800
-tags: [设计模式，责任链模式]
+tags: [设计模式, 责任链模式]
 toc:  true
 ---
 
