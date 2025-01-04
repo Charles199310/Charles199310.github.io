@@ -39,7 +39,7 @@ toc: true
 ![启动流程分类](https://github.com/Charles199310/Charles199310.github.io/blob/main/assets/images/cold-launch-1.png?raw=true)
 
 第一阶段主要是系统工作，我们不太好介入。我们需要重点考虑的是第二三阶段
-![Androidl冷启动流程](https://github.com/Charles199310/Charles199310.github.io/blob/main/assets/images/cold-launch-1.png?raw=true)
+![Androidl冷启动流程](https://github.com/Charles199310/Charles199310.github.io/blob/main/assets/images/cold-launch-2.png?raw=true)
 
 ## 冷启动优化方法
 Android 冷启动优化的手段包括以下几种：
