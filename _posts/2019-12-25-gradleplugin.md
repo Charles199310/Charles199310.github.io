@@ -69,18 +69,21 @@ Gradle插件有三种编写，并应用的方法：
 1. 新建Java library名为buildSrc:  
   ![新建library](https://github.com/Charles199310/Charles199310.github.io/blob/main/assets/images/gradle_plugin_01.PNG?raw=true)
   ![项目结构](https://github.com/Charles199310/Charles199310.github.io/blob/main/assets/images/gradle_plugin_02.PNG?raw=true)
-2. 修改buildSrc目录下的build.gradle，将Java模块改为groovy模块:
-    ``` Groovy
-    apply plugin: 'groovy'
 
-    dependencies {
-        implementation fileTree(dir: 'libs', include: ['*.jar'])
-        implementation gradleApi() //gradle sdk
-        implementation localGroovy() //groovy sdk
-    }
-    ```
+2. 修改buildSrc目录下的build.gradle，将Java模块改为groovy模块:
+  ``` Groovy
+  apply plugin: 'groovy'
+
+  dependencies {
+      implementation fileTree(dir: 'libs', include: ['*.jar'])
+      implementation gradleApi() //gradle sdk
+      implementation localGroovy() //groovy sdk
+  }
+  ```
+
 3. 删除Java目录，新建groovy目录，用于添加groovy文件:  
   ![新建grooy目录](https://github.com/Charles199310/Charles199310.github.io/blob/main/assets/images/gradle_plugin_03.PNG?raw=true)
+  
 4. 添加Plugin文件，后缀为.groovy
   ``` Groovy
   // MyTask.groovy
