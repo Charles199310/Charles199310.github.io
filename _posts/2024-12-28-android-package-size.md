@@ -138,7 +138,7 @@ Android包大小是性能的一个重要指标。在我们开发Android应用中
    
    3. **避免使用枚举**。单个枚举会使应用的 `classes.dex` 文件增加大约 1.0 到 1.4KB。这些增加的大小会快速累积，产生复杂的系统或共享库。如果可能，请考虑使用 `@IntDef` 注解和[代码缩减](https://developer.android.com/studio/build/shrink-code?hl=zh-cn)移除枚举并将它们转换为整数。
 
-2. ### **`lib/`**
+3. ### **`lib/`**
    
    `lib/`目录下主要用于存放不同的`.so`文件（二进制文件）。不同的`.so`文件用来支持不同的Android设备ABI架构（Application Binary Interface）。Android设备支持以下七种ABI：**armeabi、armeabi-v7a、arm64-v8a、x86、x86_64、mips、mips64**。
    
@@ -158,7 +158,7 @@ Android包大小是性能的一个重要指标。在我们开发Android应用中
    
    除了选择合适的ABI架构外，针对于自己开发的`.so`文件，在发布前还需要提取符号表。提取符号表的作用类似Java和Kotlin混淆，可以缩小`.so`的大小，而且会使代码更加难以反编译
 
-3. **`res/`**
+4. **`res/`**
    
    res文件中保存着大量程序运行时需要的资源，也是我们包大小优化的重点对象之一
    
@@ -181,28 +181,27 @@ Android包大小是性能的一个重要指标。在我们开发Android应用中
    6. 打开 Crunchpngs
       
       ```groovy
-          buildTypes.all { isCrunchPngs = false }
+               buildTypes.all { isCrunchPngs = false }
       ```
    
-   ```
-   7. **打开shrinkResources**。打开shrinkResource可以在打包时移除没有使用的资源文件。
-   
-   ```groovy
-   android {
-       buildTypes {
-           release {
-               minifyEnabled true
-               proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.p'
-               shrinkResources true
+    7. **打开shrinkResources**。打开shrinkResource可以在打包时移除没有使用的资源文件。
+  
+       ```groovy
+       android {
+           buildTypes {
+               release {
+                   minifyEnabled true
+                   proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.p'
+                   shrinkResources true
+               }
            }
        }
-   }       
-   ```
+       ```
 
-4. `**assets、res/raw/`**
+5. `**assets、res/raw/`**
    
    这两个文件夹里面主要存放原始文件。针对这些文件我们一是需要注意删除不需要的文件，二是可以考虑使用更小的文件达到同样的效果，比如mp4文件我们优先使用h.265格式而不是h.264等格式，再比如音频文件我们可以考虑使用较小的码率等。
 
-5. **使用插件化，组件化等技术**。
+6. **使用插件化，组件化等技术**。
    
    使用插件化，组件化的的技术可以将扩展功能放到扩展包里，等用户需要或者空闲的时候再下载，从而实现减小初始包的大小。这方面海外有google的**DynamicFeature**，国内有**DroidPlugin**、**Atlas**等。
