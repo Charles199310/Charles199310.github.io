@@ -6,7 +6,6 @@ last_modified_at: 2025-01-01 15:46 +0800
 tags: [设计模式, 模板方法模式]
 toc:  true
 ---
-
 # Template Method 模板方法模式
 
 [设计原则学习笔记](https://www.jianshu.com/p/f7f79adad32b)  

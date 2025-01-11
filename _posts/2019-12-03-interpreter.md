@@ -6,7 +6,6 @@ last_modified_at: 2025-01-01 16:04 +0800
 tags: [设计模式, 解释器模式]
 toc:  true
 ---
-
 # Interpreter 解释器模式
 
 [设计原则学习笔记](https://www.jianshu.com/p/f7f79adad32b)  

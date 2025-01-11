@@ -6,7 +6,6 @@ last_modified_at: 2025-01-01 15:32 +0800
 tags: [设计模式, 装饰模式]
 toc:  true
 ---
-
 # Decorator 装饰模式
 
 [设计原则学习笔记](https://www.jianshu.com/p/f7f79adad32b)  
